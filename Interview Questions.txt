@@ -1,0 +1,3 @@
+What is Fluent Interface in Java Selenium ?
+What is Builder Pattern in Java Selenium?
+Difference Functional Page Object and Structural Page Objects
