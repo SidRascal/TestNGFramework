@@ -16,12 +16,12 @@ public class StorePage extends BasePage {
 
 	}
 
-	private StorePage enterTextInSearchField(String txt) {
+	public StorePage enterTextInSearchField(String txt) {
 		driver.findElement(searchField).sendKeys(txt);
 		return this;
 	}
 
-	private StorePage clickSearchBtn() {
+	public StorePage clickSearchBtn() {
 		driver.findElement(searchButton).click();
 		return this;
 	}
