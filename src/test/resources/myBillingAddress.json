@@ -1,8 +1,10 @@
 {
 	"firstName": "Sam",
 	"lastName": "Curran",
-	"addressLineOne": "England",
-	"city": "London",
-	"postalCode": "59089",
+	"country":"India",
+	"state":"MH",
+	"addressLineOne": "India",
+	"city": "Thane",
+	"postalCode": "400605",
 	"email": "sam.curran@gmail.com"
 }

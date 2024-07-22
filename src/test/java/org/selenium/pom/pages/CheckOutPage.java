@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.selenium.pom.base.BasePage;
 import org.selenium.pom.objects.BillingAddress;
@@ -25,8 +26,11 @@ public class CheckOutPage extends BasePage {
 	private final By clickHereToLogin = By.className("showlogin");
 	private final By userName = By.id("username");
 	private final By passWord = By.id("password");
+	private final By countryDropDown = By.id("billing_country");
+	private final By stateDropDown = By.xpath("//select[@id='billing_state']");
+	private final By stateDropDown2 = By.className("select2-selection.select2-selection--single");
 
-	private final By overlay = By.cssSelector("blockUI.blockOverlay");
+	private final By overlay = By.cssSelector(".blockUI.blockOverlay");
 
 	public CheckOutPage(WebDriver driver) {
 		super(driver);
@@ -45,6 +49,13 @@ public class CheckOutPage extends BasePage {
 		e.sendKeys(lastName);
 		return this;
 	}
+	
+	public CheckOutPage selectCountry(String countryName)
+	{
+		Select select = new Select(driver.findElement(countryDropDown));
+		select.selectByVisibleText(countryName);
+		return this;
+	}
 
 	public CheckOutPage enterAddressLineOne(String addressLineOne) {
 		WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(addressLineOneField));
@@ -57,6 +68,14 @@ public class CheckOutPage extends BasePage {
 		WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(billingCityField));
 		e.clear();
 		e.sendKeys(billingCity);
+		return this;
+		
+	}
+	
+	public CheckOutPage selectState(String stateName) throws InterruptedException
+	{
+		Select select = new Select(driver.findElement(stateDropDown));
+		select.selectByValue(stateName);
 		return this;
 	}
 
@@ -96,10 +115,15 @@ public class CheckOutPage extends BasePage {
 		return this;
 	}
 
-	public CheckOutPage setBillingAddress(BillingAddress billingAddress) {
-		return enterFirstName(billingAddress.getFirstName()).enterLastName(billingAddress.getLastName())
-				.enterAddressLineOne(billingAddress.getAddressLineOne()).enterBillingCity(billingAddress.getCity())
-				.enterPostalCode(billingAddress.getPostalCode()).enterEmail(billingAddress.getEmail());
+	public CheckOutPage setBillingAddress(BillingAddress billingAddress) throws InterruptedException {
+		return enterFirstName(billingAddress.getFirstName())
+				.enterLastName(billingAddress.getLastName())
+				.selectCountry(billingAddress.getCountry())
+				.enterAddressLineOne(billingAddress.getAddressLineOne())
+				.enterBillingCity(billingAddress.getCity())
+				.selectState(billingAddress.getState())
+				.enterPostalCode(billingAddress.getPostalCode())
+				.enterEmail(billingAddress.getEmail());
 
 	}
 

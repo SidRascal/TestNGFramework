@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 public class MyFirstTestCase extends BaseTest {
 
 	@Test
-	public void guestCheckoutUsingDirectBankTransfer() throws IOException {
+	public void guestCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
 
 		// This is by using PoJo class
 		/*
