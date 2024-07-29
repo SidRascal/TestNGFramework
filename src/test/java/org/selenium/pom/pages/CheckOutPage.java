@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -28,7 +29,9 @@ public class CheckOutPage extends BasePage {
 	private final By passWord = By.id("password");
 	private final By countryDropDown = By.id("billing_country");
 	private final By stateDropDown = By.xpath("//select[@id='billing_state']");
-	private final By stateDropDown2 = By.className("select2-selection.select2-selection--single");
+
+//	private final By countryDropDown = By.id("select2-billing_country-container");
+//	private final By stateDropDown = By.id("select2-billing_country-container");
 
 	private final By overlay = By.cssSelector(".blockUI.blockOverlay");
 
@@ -49,11 +52,21 @@ public class CheckOutPage extends BasePage {
 		e.sendKeys(lastName);
 		return this;
 	}
-	
-	public CheckOutPage selectCountry(String countryName)
-	{
+
+	public CheckOutPage selectCountry(String countryName) throws InterruptedException {
 		Select select = new Select(driver.findElement(countryDropDown));
 		select.selectByVisibleText(countryName);
+
+//		wait.until(ExpectedConditions.elementToBeClickable(countryDropDown)).click();
+//		WebElement e = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='India']")));
+//		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", e);
+		
+//		wait.until(ExpectedConditions.elementToBeClickable(countryDropDown)).click();
+//		WebElement e = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='"+countryName+"']")));
+//		JavascriptExecutor executer = (JavascriptExecutor) driver;
+//		executer.executeAsyncScript("arguments[0].scrollIntoView(true);", e);
+		
+		Thread.sleep(10000);
 		return this;
 	}
 
@@ -69,13 +82,15 @@ public class CheckOutPage extends BasePage {
 		e.clear();
 		e.sendKeys(billingCity);
 		return this;
-		
+
 	}
-	
-	public CheckOutPage selectState(String stateName) throws InterruptedException
-	{
+
+	public CheckOutPage selectState(String stateName) {
 		Select select = new Select(driver.findElement(stateDropDown));
 		select.selectByValue(stateName);
+//		wait.until(ExpectedConditions.elementToBeClickable(stateDropDown)).click();
+//		WebElement e = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='Maharashtra']")));
+//		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", e);
 		return this;
 	}
 
@@ -116,14 +131,10 @@ public class CheckOutPage extends BasePage {
 	}
 
 	public CheckOutPage setBillingAddress(BillingAddress billingAddress) throws InterruptedException {
-		return enterFirstName(billingAddress.getFirstName())
-				.enterLastName(billingAddress.getLastName())
-				.selectCountry(billingAddress.getCountry())
-				.enterAddressLineOne(billingAddress.getAddressLineOne())
-				.enterBillingCity(billingAddress.getCity())
-				.selectState(billingAddress.getState())
-				.enterPostalCode(billingAddress.getPostalCode())
-				.enterEmail(billingAddress.getEmail());
+		return enterFirstName(billingAddress.getFirstName()).enterLastName(billingAddress.getLastName())
+				.selectCountry(billingAddress.getCountry()).enterAddressLineOne(billingAddress.getAddressLineOne())
+				.enterBillingCity(billingAddress.getCity()).selectState(billingAddress.getState())
+				.enterPostalCode(billingAddress.getPostalCode()).enterEmail(billingAddress.getEmail());
 
 	}
 
